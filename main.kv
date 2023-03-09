@@ -1,0 +1,48 @@
+MyScreenManager:
+    FirstScreen:
+    SecondScreen:
+
+
+<FirstScreen>:
+    name: 'first'
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            text:"welcome to main screen"
+            font_size: 30
+
+        GridLayout:
+            id: grid1
+            cols: 3
+            padding: 30
+            spacing: 40
+            Button:
+                id: boton1
+                text:'print'
+                size_hint_x: 1
+                on_release: app.root.btn_action()
+            Button:
+                text:'print 2'
+                size_hint_x: 1
+                on_release: app.root.btn_action()
+            Button:
+                text:'go to second screen'
+                size_hint_x: 1
+                on_release: app.root.current = 'second'
+                # lo del status
+
+
+<SecondScreen>:
+    name:'second'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: "this is the second screen"
+            font_size: 30
+        FloatLayout:
+            Button:
+                text: "go to previous screen"
+                size_hint: (.4, .2)
+                pos_hint: {'x': .3, 'y': .4}
+                on_release: app.root.current = 'first'
