@@ -1,10 +1,11 @@
 MyScreenManager:
-    FirstScreen:
-    SecondScreen:
+    MainScreen:
+    IncomeScreen:
+    TransactionScreen:
 
 
-<FirstScreen>:
-    name: 'first'
+<MainScreen>:
+    name: 'main_screen'
     BoxLayout:
         orientation: 'vertical'
 
@@ -13,36 +14,65 @@ MyScreenManager:
             font_size: 30
 
         GridLayout:
-            id: grid1
-            cols: 3
+            id: grid_main
+            cols: 2
             padding: 30
             spacing: 40
             Button:
-                id: boton1
-                text:'print'
+                id: expense_btn
+                text:'Expenses'
                 size_hint_x: 1
-                on_release: app.root.btn_action()
+                on_release: app.root.current = 'transaction_screen'
             Button:
-                text:'print 2'
+                id: income_btn
+                text:'Incomes'
                 size_hint_x: 1
-                on_release: app.root.btn_action()
-            Button:
-                text:'go to second screen'
-                size_hint_x: 1
-                on_release: app.root.current = 'second'
+                on_release: app.root.go_income_screen()
                 # lo del status
 
 
-<SecondScreen>:
-    name:'second'
+<IncomeScreen>:
+    name:'income_screen'
+
     BoxLayout:
         orientation: 'vertical'
+
         Label:
-            text: "this is the second screen"
+            text: "this is the income screen"
             font_size: 30
+
+        GridLayout:
+            id: grid_prueba
+            cols: 2
+            padding: 30
+            spacing: 40
+
         FloatLayout:
             Button:
+                id: boton_prueba
                 text: "go to previous screen"
                 size_hint: (.4, .2)
                 pos_hint: {'x': .3, 'y': .4}
-                on_release: app.root.current = 'first'
+                on_release: app.root.current = 'main_screen'
+
+
+<TransactionScreen>:
+    name:'transaction_screen'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            text: "this is the transaction screen"
+            font_size: 30
+
+        GridLayout:
+            id: grid_prueba
+            cols: 1
+            padding: 30
+
+            Button:
+                text: "Asdasd"
+                font_size: 30
+
+

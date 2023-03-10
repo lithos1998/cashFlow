@@ -1,42 +1,45 @@
+import kb as kb
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 import sqlite3
+import dbHelper
 
-
-def conect_db():
-    con = sqlite3.connect("mycashflow.db")
-    cursor = con.cursor()
-
-    #cursor.execute("CREATE TABLE pruebas(id integer primary key autoincrement, title, description)")
-    res = cursor.execute("SELECT name FROM sqlite_master")
-
-    print(res.fetchone())
-
-    res = cursor.execute("insert into pruebas(title, description) values('titulo prueba', 'asdasda dasdasdad asd asd')")
-
-    res = cursor.execute("SELECT * FROM pruebas")
-    print(res.fetchone())
-    return cursor
+db = dbHelper.connect_db()
+cursor = db.cursor()
 
 
 class MyScreenManager(ScreenManager):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        conect_db()
 
-    # llamar al boton
-    def btn_action(self):
-        texto = self.get_screen('first').ids.boton1.text = "toma put"
-        print(texto)
+    # go income screen
+    def go_income_screen(self):
+        result = cursor.execute("SELECT SERVICE_NAME FROM SERVICES WHERE TYPE_ID = 222")
+        result = result.fetchall()
+
+        for k in result:
+            print(k[0])
+            btn_name = k[0]
+            self.get_screen('income_screen').ids.grid_prueba.add_widget(Button(text=btn_name, size_hint_x='1'))
+
+        self.current = 'income_screen'
+        # add_widget(new_btn)
+        # ids.expense_btn.text = str(result.fetchone()[0])
 
 
-class FirstScreen(Screen):
+class MainScreen(Screen):
     pass
 
 
-class SecondScreen(Screen):
+class IncomeScreen(Screen):
     pass
+
+
+class TransactionScreen(Screen):
+    pass
+
 
 
 class MainApp(App):
